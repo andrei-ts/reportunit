@@ -194,16 +194,16 @@ namespace ReportUnit.Parser
                     test.CategoryList.AddRange(categories);
                     report.CategoryList.AddRange(categories);
 
-
+                    string delimeter = Environment.NewLine + "====================================================" + Environment.NewLine;
                     // error and other status messages
                     test.StatusMessage = 
-                        tc.Element("failure") != null 
-                            ? tc.Element("failure").Element("message").Value.Trim()
+                        tc.Element("failure") != null
+                            ? delimeter + "EXCEPTION MESSAGE: " + Environment.NewLine + tc.Element("failure").Element("message").Value.Trim()
                             : "";
                     test.StatusMessage += 
                         tc.Element("failure") != null 
                             ? tc.Element("failure").Element("stack-trace") != null 
-                                ? tc.Element("failure").Element("stack-trace").Value.Trim()
+                                ? delimeter + "EXCEPTION STACKTRACE:" + Environment.NewLine + tc.Element("failure").Element("stack-trace").Value.Trim()
                                 : "" 
                             : "";
 
@@ -213,7 +213,7 @@ namespace ReportUnit.Parser
 
                    // add NUnit console output to the status message
                    test.StatusMessage += tc.Element( "output" ) != null
-                     ? tc.Element( "output" ).Value.Trim()
+                     ? delimeter + "EXECUTE STEPS:" + Environment.NewLine + tc.Element("output").Value.Trim() + delimeter
                      : "";
 
                    testSuite.TestList.Add(test);
@@ -225,6 +225,7 @@ namespace ReportUnit.Parser
             });
 
             //Sort category list so it's in alphabetical order
+            report.TestSuiteList = report.TestSuiteList.OrderBy(ts => ts.Name).ToList();
             report.CategoryList.Sort();
 
             return report;

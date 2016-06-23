@@ -81,8 +81,12 @@
     <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cdn\reportunit.css" />
-    <Content Include="cdn\reportunit.js" />
+    <Content Include="cdn\reportunit.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="cdn\reportunit.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
