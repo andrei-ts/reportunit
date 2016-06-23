@@ -89,20 +89,6 @@ namespace ReportUnit.Templates
                             <div class='row dashboard'>
                                 <div class='col s12 m6 l4'>
                                     <div class='card-panel'>
-                                        <div alt='Count of all passed tests' title='Count of all passed tests'>Suite Summary</div>    
-                                        <div class='chart-box'>
-                                            <canvas class='text-centered' id='suite-analysis'></canvas>
-                                        </div>
-                                        <div>
-                                            <span class='weight-light'><span class='suite-pass-count weight-normal'></span> suites(s) passed</span>
-                                        </div> 
-                                        <div>
-                                            <span class='weight-light'><span class='suite-fail-count weight-normal'></span> suites(s) failed, <span class='suite-others-count weight-normal'></span> others</span>
-                                        </div> 
-                                    </div>
-                                </div>
-                                <div class='col s12 m6 l4'>
-                                    <div class='card-panel'>
                                         <div alt='Count of all failed tests' title='Count of all failed tests'>Tests Summary</div>
                                         <div class='chart-box'>
                                             <canvas class='text-centered' id='test-analysis'></canvas>
@@ -111,7 +97,7 @@ namespace ReportUnit.Templates
                                             <span class='weight-light'><span class='test-pass-count weight-normal'>@Model.Passed</span> test(s) passed</span>
                                         </div> 
                                         <div>
-                                            <span class='weight-light'><span class='test-fail-count weight-normal'>@Model.Failed</span> test(s) failed, <span class='test-others-count weight-normal'>@(Model.Total - (Model.Passed + Model.Failed))</span> others</span>
+                                            <span class='weight-light'><span class='test-fail-count weight-normal'>@Model.Failed</span> test(s) failed, <span class='test-others-count weight-normal'>@(Model.Total - (Model.Passed + Model.Failed))</span> ignored</span>
                                         </div> 
                                     </div>
                                 </div>
@@ -179,7 +165,14 @@ namespace ReportUnit.Templates
                                                     <li class='suite @Model.TestSuiteList[ix].Status.ToString().ToLower()'>
                                                         <div class='suite-head'>
                                                             <div class='suite-name'>@Model.TestSuiteList[ix].Name</div>
-                                                            <div class='suite-result @Model.TestSuiteList[ix].Status.ToString().ToLower() right label'>@Model.TestSuiteList[ix].Status.ToString()</div>
+                                                            @if(@Model.TestSuiteList[ix].Status.ToString().ToLower() == ""failed"" && @Model.TestSuiteList[ix].TestList.Count(x=> x.Status.ToString().ToLower()== ""failed"") != @Model.TestSuiteList[ix].TestList.Count)
+                                                            {
+                                                                 <div class='suite-result @Model.TestSuiteList[ix].Status.ToString().ToLower() right label'>@Model.TestSuiteList[ix].TestList.Count(x=> x.Status.ToString().ToLower()== ""failed"") of @Model.TestSuiteList[ix].TestList.Count @Model.TestSuiteList[ix].Status.ToString()</div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class='suite-result @Model.TestSuiteList[ix].Status.ToString().ToLower() right label'>@Model.TestSuiteList[ix].Status.ToString()</div>
+                                                            }
                                                         </div>
                                                         <div class='suite-content hide'>
                                                             <span alt='Suite started at time' title='Suite started at time' class='startedAt label green lighten-2 text-white'>@Model.TestSuiteList[ix].StartTime</span>
@@ -200,6 +193,7 @@ namespace ReportUnit.Templates
                                                             <table class='bordered'>
                                                                 <thead>
                                                                     <tr>
+                                                                        <th>MethodName</th>
                                                                         <th>TestName</th>
                                                                         <th>Status</th>
                                                                         @if (Model.TestSuiteList.Count > 0 && Model.TestSuiteList[ix].TestList.Any(x => x.CategoryList.Count > 0))
@@ -216,6 +210,9 @@ namespace ReportUnit.Templates
                                                                     @foreach (var test in Model.TestSuiteList[ix].TestList)
                                                                     {
                                                                         <tr class='@test.Status.ToString().ToLower() test-status'>
+                                                                            <td class='method-name'>
+                                                                                <span class='name'>@test.MethodName</span>
+                                                                            </td>
                                                                             <td class='test-name'>
                                                                                 @{var testName = test.Name.Replace(""<"", ""&lt;"").Replace("">"", ""&gt;"");}
                                                                                 @if (!String.IsNullOrEmpty(@test.Description))

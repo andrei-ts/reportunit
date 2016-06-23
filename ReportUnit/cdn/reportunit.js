@@ -148,11 +148,11 @@ $(document).ready(function() {
 		$('.main-wrap, nav').css('padding-left', '20px');
 	}
 
-	var passedPercentage = Math.round(((passed / total) * 100)) + '%';
+	var passedPercentage = Math.round(((passed / (passed + failed)) * 100)) + '%';
 	$('.pass-percentage').text(passedPercentage);
 	$('.dashboard .determinate').attr('style', 'width:' + passedPercentage);
 
-	suitesChart(); testsChart();
+	testsChart();
 	$('ul.doughnut-legend').addClass('right');
 	
 	resetFilters();
@@ -167,6 +167,7 @@ var options = {
 };
 
 /* report -> suites chart */
+/*
 function suitesChart() {
 	if (!$('#suite-analysis').length) {
 		return false;
@@ -192,7 +193,7 @@ function suitesChart() {
 	var suiteChart = new Chart(ctx).Doughnut(data, options);
 	drawLegend(suiteChart, 'suite-analysis');
 }
-
+*/
 /* test case counts */
 var total = $('.test-name').length;
 var passed = $('td.passed').length;
@@ -218,7 +219,7 @@ function testsChart() {
         data = [
             { value: passed, color: '#00af00', highlight: '#32bf32', label: 'Pass' },
             { value: failed, color:'#F7464A', highlight: '#FF5A5E', label: 'Fail' },
-            { value: others, color: '#1e90ff', highlight: '#4aa6ff', label: 'Others' }
+            { value: others, color: '#1e90ff', highlight: '#4aa6ff', label: 'Skipped' }
         ];
         
         $('.test-others-count').text(others);
@@ -227,9 +228,7 @@ function testsChart() {
         data = [
             { value: passed, color: '#00af00', highlight: '#32bf32', label: 'Pass' },
             { value: failed, color:'#F7464A', highlight: '#FF5A5E', label: 'Fail' },
-            { value: errors, color:'#ff6347', highlight: '#ff826b', label: 'Error' },
-            { value: inconclusive, color: '#FDB45C', highlight: '#FFC870', label: 'Warning' },
-            { value: skipped, color: '#1e90ff', highlight: '#4aa6ff', label: 'Skip' }
+            { value: skipped, color: '#1e90ff', highlight: '#4aa6ff', label: 'Skipped' }
         ];
         
         $('.test-others-count').text(errors + inconclusive + skipped);

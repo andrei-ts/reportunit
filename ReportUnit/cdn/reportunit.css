@@ -92,7 +92,7 @@ th, td {
 	color: #fff !important;
 }
 .weight-light {
-    font-size: 12px;
+    font-size: 14px;
 	font-weight: 400;
 }
 .weight-normal {
@@ -335,9 +335,9 @@ nav a.button-collapse {
 /* ---- [ fixture / suites ] ---- */
 .suite {
 	border-bottom: 1px solid #eee;
-	font-size: 15px;
+	font-size: 12px;
 	list-style: none;
-	padding: 0 20px;
+	padding: 0 5px;
 }
 .suite.active {
 	background: #f7f7f7;

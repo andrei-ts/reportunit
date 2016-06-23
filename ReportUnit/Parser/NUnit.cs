@@ -143,7 +143,7 @@ namespace ReportUnit.Parser
                 ts.Descendants("test-case").AsParallel().ToList().ForEach(tc =>
                 {
                     var test = new Model.Test();
-
+                    test.MethodName = tc.Attribute("methodname").Value;
                     test.Name = tc.Attribute("name").Value;
                     test.Status = StatusExtensions.ToStatus(tc.Attribute("result").Value);
                     
@@ -224,8 +224,10 @@ namespace ReportUnit.Parser
                 report.TestSuiteList.Add(testSuite);
             });
 
-            //Sort category list so it's in alphabetical order
+            
             report.TestSuiteList = report.TestSuiteList.OrderBy(ts => ts.Name).ToList();
+
+            //Sort category list so it's in alphabetical order
             report.CategoryList.Sort();
 
             return report;

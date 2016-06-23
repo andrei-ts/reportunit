@@ -8,6 +8,8 @@ namespace ReportUnit.Model
 {
     public class Test
     {
+        public string MethodName { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
