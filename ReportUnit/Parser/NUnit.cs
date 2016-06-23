@@ -137,7 +137,7 @@ namespace ReportUnit.Parser
                 }
 
                 // get test suite level categories
-                var suiteCategories = this.GetCategories(ts, false);
+                var suiteCategories = this.GetCategories(ts);
 
                 // Test Cases
                 ts.Descendants("test-case").AsParallel().ToList().ForEach(tc =>
@@ -175,7 +175,7 @@ namespace ReportUnit.Parser
                             : "";
 
                     // get test case level categories
-                    var categories = this.GetCategories(tc, true);
+                    var categories = this.GetCategories(tc);
 
                     // if this is a parameterized test, get the categories from the parent test-suite
                     var parameterizedTestElement = tc
@@ -185,7 +185,7 @@ namespace ReportUnit.Parser
 
                     if (null != parameterizedTestElement)
                     {
-                        var paramCategories = this.GetCategories(parameterizedTestElement, false);
+                        var paramCategories = this.GetCategories(parameterizedTestElement);
                         categories.UnionWith(paramCategories);
                     }
 
@@ -236,26 +236,23 @@ namespace ReportUnit.Parser
         /// <param name="elem">XElement to parse</param>
         /// <param name="allDescendents">If true, return all descendent categories.  If false, only direct children</param>
         /// <returns></returns>
-        private HashSet<string> GetCategories(XElement elem, bool allDescendents)
+        private HashSet<string> GetCategories(XElement elem)
         {
             //Define which function to use
-            var parser = allDescendents
-                ? new Func<XElement, string, IEnumerable<XElement>>((e, s) => e.Descendants(s))
-                : new Func<XElement, string, IEnumerable<XElement>>((e, s) => e.Elements(s));
+
 
             //Grab unique categories
             HashSet<string> categories = new HashSet<string>();
-            bool hasCategories = parser(elem, "categories").Any();
-            if (hasCategories)
-            {
-                List<XElement> cats = parser(elem, "categories").Elements("category").ToList();
 
-                cats.ForEach(x =>
-                {
-                    string cat = x.Attribute("name").Value;
-                    categories.Add(cat);
-                });
-            }
+            List<XElement> cats = elem.Descendants("property")
+                .Where(c => c.Attribute("name").Value.Equals("Category", StringComparison.CurrentCultureIgnoreCase))
+                .ToList();
+
+            cats.ForEach(x =>
+            {
+                string cat = x.Attribute("value").Value;
+                categories.Add(cat);
+            });
 
             return categories;
         }

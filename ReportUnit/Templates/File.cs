@@ -33,7 +33,7 @@ namespace ReportUnit.Templates
                     <meta name='author' content=''>
                     <title>ReportUnit TestRunner Report</title>
                     <link href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css' rel='stylesheet' type='text/css'>
-                    <link href='https://cdn.rawgit.com/reportunit/reportunit/005dcf934c5a53e60b9ec88a2a118930b433c453/cdn/reportunit.css' type='text/css' rel='stylesheet' />
+                    <link href='https://cdn.rawgit.com/drkthng/reportunit/76772429bfcbe3de2a71ea9e28bf0d5826d1e3e9/cdn/reportunit.css' type='text/css' rel='stylesheet' />
                     
                 </head>
                 <body>
