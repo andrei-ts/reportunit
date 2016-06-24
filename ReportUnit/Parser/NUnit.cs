@@ -164,7 +164,14 @@ namespace ReportUnit.Parser
                         tc.Attribute("end-time") != null 
                             ? tc.Attribute("end-time").Value 
                             : "";
-
+                    //duration
+                    string duration = tc.Attribute("duration") != null ? tc.Attribute("duration").Value : "";
+                    if (!string.IsNullOrEmpty(duration))
+                    {
+                        TimeSpan t = TimeSpan.FromSeconds(Convert.ToDouble(duration));
+                        test.Duration = t.ToString(@"hh\:mm\:ss\:fff");
+                    }
+                    
                     // description
                     var description = 
                         tc.Descendants("property")

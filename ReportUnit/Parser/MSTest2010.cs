@@ -86,7 +86,7 @@ namespace ReportUnit.Parser
                         : "";
 
                 var timespan = Convert.ToDateTime(test.StartTime) - Convert.ToDateTime(test.EndTime);
-                test.Duration = timespan.Milliseconds;
+               // test.Duration = timespan.Milliseconds;
 
                 // error and other status messages
                 test.StatusMessage = tc.Element(xns + "Output") != null ? tc.Element(xns + "Output").Value.Trim() : "";
@@ -139,7 +139,7 @@ namespace ReportUnit.Parser
             }
 
             testSuite.TestList.Add(test);
-            testSuite.Duration += test.Duration;
+            //testSuite.Duration += test.Duration;
             testSuite.Status = ReportUtil.GetFixtureStatus(testSuite.TestList);
         }
 

@@ -31,7 +31,7 @@ namespace ReportUnit.Model
         /// <summary>
         /// How long the test took to run (in milliseconds)
         /// </summary>
-        public double Duration { get; set; }
+        public string Duration { get; set; }
 
         /// <summary>
         /// Categories & features associated with the test
