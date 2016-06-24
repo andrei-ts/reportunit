@@ -33,7 +33,7 @@ namespace ReportUnit.Templates
                     <meta name='author' content=''>
                     <title>ReportUnit TestRunner Report</title>
                     <link href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css' rel='stylesheet' type='text/css'>
-                    <link href='https://cdn.rawgit.com/andrei-turavets-epam/reportunit/caf763f1a60ad2b5f55e1d4dc3a40890f3ef9470/ReportUnit/cdn/reportunit.css' type='text/css' rel='stylesheet' />
+                    <link href='https://github.com/andrei-turavets-epam/reportunit/blob/0b2af4e6289f0589870607bccf95828ef77ed8e0/ReportUnit/cdn/reportunit.css' type='text/css' rel='stylesheet' />
                     
                 </head>
                 <body>
@@ -331,7 +331,7 @@ namespace ReportUnit.Templates
                 <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script> 
                 <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js'></script> 
                 <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
-                <script src='cdn/reportunit.js' type='text/javascript'></script>
+                <script src='https://cdn.rawgit.com/andrei-turavets-epam/reportunit/0b2af4e6289f0589870607bccf95828ef77ed8e0/ReportUnit/cdn/reportunit.js' type='text/javascript'></script>
 
             </html>
             ".Replace("\r\n", "").Replace("\t", "").Replace("    ", ""); 
