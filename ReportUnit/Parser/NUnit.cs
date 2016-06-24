@@ -269,7 +269,7 @@ namespace ReportUnit.Parser
 
         private RunInfo CreateRunInfo(XDocument doc, Report report)
         {
-            if (doc.Element("environment") == null)
+            if (!doc.Descendants("environment").Any())
                 return null;
 
             RunInfo runInfo = new RunInfo();
