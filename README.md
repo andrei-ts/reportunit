@@ -1,4 +1,8 @@
+
+This fork of report unit is adapted for NUnit 3
+
 # ReportUnit
+
 
 ReportUnit is a report generator for the test-runner family. It uses stock reports from NUnit, MSTest and Gallio and converts them into attractive HTML reports with dashboards.
 
