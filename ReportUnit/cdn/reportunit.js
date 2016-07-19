@@ -3,7 +3,7 @@ var menuWidth = 260;
 function showDynamicModal(heading, content) {
     var m = $('#dynamicModal');
     m.find('h4').text(heading);
-    m.find('pre').text(content);
+    m.find('pre').html(content);
     m.openModal({ in_duration: 200 });
 }
 
@@ -14,8 +14,10 @@ $('.details-container').click(function(evt) {
         if (t.is('i')) {
             t = t.parent();
         }
-        
-        showDynamicModal(t.closest('tr').find('.name').text() + ' StatusMessage', t.next().text());
+        /* Converting brackets*/
+        var escaped = t.next().html().replace(/(&lt;)/g, "<");
+        escaped = escaped.replace(/(&gt;)/g, ">");
+        showDynamicModal(t.closest('tr').find('.name').text() + ' Logs', escaped);
     }
     
     if (t.is('.showDescription')) {
