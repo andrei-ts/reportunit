@@ -205,6 +205,7 @@ namespace ReportUnit.Templates
                                                                         {
                                                                             <th>StatusMessage</th>
                                                                         }
+                                                                        <th>Screenshots</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -260,6 +261,21 @@ namespace ReportUnit.Templates
                                                                                 {
                                                                                     <td class='grey lighten-4'></td>
                                                                                 }
+                                                                            }
+                                                                            @if (test.ScreenshotLinks.Count > 0)
+                                                                            { 
+                                                                                <td class='screenshots'>
+                                                                                    <div class='screenshots-list'>
+                                                                                        @foreach(var screenshotHref in test.ScreenshotLinks)
+                                                                                        {
+                                                                                            <li>@screenshotHref</li>
+                                                                                        }
+                                                                                    </div>
+                                                                                </td>
+                                                                            }
+                                                                            else 
+                                                                            {
+                                                                                <td class='grey lighten-4'></td>
                                                                             }
                                                                             <td class='test-features hide @test.GetCategories()'></td>
                                                                         </tr>

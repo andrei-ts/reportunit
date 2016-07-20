@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Threading.Tasks;
 
@@ -223,6 +224,15 @@ namespace ReportUnit.Parser
                      ? delimeter + "EXECUTE STEPS:" + Environment.NewLine + tc.Element("output").Value.Trim() + delimeter
                      : "";
 
+                   //add screenshot links
+                   MatchCollection matches = Regex.Matches(tc.Element("output").Value.Trim(), @"Generated Screenshot:\s(<a.*a>)");
+                   foreach (Match match in matches)
+                   {
+                       if (match.Success)
+                       {
+                           test.ScreenshotLinks.Add(match.Groups[1].Value);
+                       }
+                   }
                    testSuite.TestList.Add(test);
                 });
 

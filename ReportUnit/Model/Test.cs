@@ -38,6 +38,8 @@ namespace ReportUnit.Model
         /// </summary>
         public List<string> CategoryList;
 
+        public List<string> ScreenshotLinks;
+
         public string GetCategories()
         {
             if (CategoryList.Count == 0)
@@ -51,6 +53,7 @@ namespace ReportUnit.Model
         public Test()
         {
             CategoryList = new List<string>();
+            ScreenshotLinks = new List<string>();
             Status = Status.Unknown;
         }
     }
