@@ -33,7 +33,7 @@ namespace ReportUnit.Templates
                     <meta name='author' content=''>
                     <title>ReportUnit TestRunner Report</title>
                     <link href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css' rel='stylesheet' type='text/css'>
-                    <link href='https://cdn.rawgit.com/andrei-turavets-epam/reportunit/ffdb8fc12a9cd88c848390d10590fcd272bd1004/ReportUnit/cdn/reportunit.css' type='text/css' rel='stylesheet' />
+                    <link href='cdn/reportunit.css' type='text/css' rel='stylesheet' />
                     
                 </head>
                 <body>
@@ -107,6 +107,27 @@ namespace ReportUnit.Templates
                                         <div class='panel-lead pass-percentage'></div>
                                         <div class='progress'>
                                             <div class='determinate'></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='col s12 m12 l4'>
+                                    <div class='card-panel'>
+                                        <div alt='Run Info' title='Run Info'>Run Info</div>
+                                        <div class='run-info'>
+                                            <table class='run-info'>
+                                                <tbody>
+                                                    @if (Model.RunInfo != null)
+                                                    {
+                                                        foreach (var key in Model.RunInfo.Keys)
+                                                        {
+                                                            <tr>
+                                                                <td>@key</td>
+                                                                <td>@Model.RunInfo[key]</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

@@ -18,6 +18,22 @@ pre {
 	white-space: -o-pre-wrap;  
 	word-wrap: break-word;     
 }
+
+table.run-info thead, table.run-info tbody {
+	float: left;
+	width: 100%;
+}
+table.run-info tbody {
+	overflow: auto;
+	height: 200px;
+}
+table.run-info td {
+    border: 1px solid #e5e5e5;
+    padding: 2px;
+    font-size: 13px;
+    word-break: break-all;
+}
+
 td.test-name {
 	vertical-align: top;
 }

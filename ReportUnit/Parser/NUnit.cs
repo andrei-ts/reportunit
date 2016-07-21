@@ -286,16 +286,31 @@ namespace ReportUnit.Parser
             runInfo.TestRunner = report.TestRunner;
 
             XElement env = doc.Descendants("environment").First();
-            runInfo.Info.Add("Test Results File", resultsFile);
-            if (env.Attribute("nunit-version") != null)
-                runInfo.Info.Add("NUnit Version", env.Attribute("nunit-version").Value);
-            runInfo.Info.Add("Assembly Name", report.AssemblyName);
-            runInfo.Info.Add("OS Version", env.Attribute("os-version").Value);
-            runInfo.Info.Add("Platform", env.Attribute("platform").Value);
-            runInfo.Info.Add("CLR Version", env.Attribute("clr-version").Value);
-            runInfo.Info.Add("Machine Name", env.Attribute("machine-name").Value);
-            runInfo.Info.Add("User", env.Attribute("user").Value);
-            runInfo.Info.Add("User Domain", env.Attribute("user-domain").Value);
+
+            if (env.Attribute("app-under-test") != null)
+                runInfo.Info.Add("App under test", env.Attribute("app-under-test").Value);
+
+            if (env.Attribute("app-version") != null)
+                runInfo.Info.Add("App version", env.Attribute("app-version").Value);
+
+            if (env.Attribute("app-branch") != null)
+                runInfo.Info.Add("App branch", env.Attribute("app-branch").Value);
+
+            if (env.Attribute("tests-branch") != null)
+                runInfo.Info.Add("Tests branch", env.Attribute("tests-branch").Value);
+
+            if (env.Attribute("environment") != null)
+                runInfo.Info.Add("Environment", env.Attribute("environment").Value);
+
+            if (env.Attribute("os-version") != null)
+                runInfo.Info.Add("OS Version", env.Attribute("os-version").Value);
+
+            if (env.Attribute("os-architecture") != null)
+                runInfo.Info.Add("OS Architecture", env.Attribute("os-architecture").Value);
+
+            if (env.Attribute("machine-name") != null)
+                runInfo.Info.Add("Machine Name", env.Attribute("machine-name").Value);
+
 
             return runInfo;
         }
