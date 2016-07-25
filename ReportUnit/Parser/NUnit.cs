@@ -225,15 +225,19 @@ namespace ReportUnit.Parser
                      : "";
 
                    //add screenshot links
-                   MatchCollection matches = Regex.Matches(tc.Element("output").Value.Trim(), @"Generated Screenshot:\s(<a.*a>)");
-                   foreach (Match match in matches)
-                   {
-                       if (match.Success)
-                       {
-                           test.ScreenshotLinks.Add(match.Groups[1].Value);
-                       }
-                   }
-                   testSuite.TestList.Add(test);
+                    if (tc.Element("output") != null)
+                    {
+                        MatchCollection matches = Regex.Matches(tc.Element("output").Value.Trim(),
+                            @"Generated Screenshot:\s(<a.*a>)");
+                        foreach (Match match in matches)
+                        {
+                            if (match.Success)
+                            {
+                                test.ScreenshotLinks.Add(match.Groups[1].Value);
+                            }
+                        }
+                    }
+                    testSuite.TestList.Add(test);
                 });
 
                 testSuite.Status = ReportUtil.GetFixtureStatus(testSuite.TestList);
