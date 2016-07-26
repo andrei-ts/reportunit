@@ -300,6 +300,12 @@ namespace ReportUnit.Parser
             if (env.Attribute("app-branch") != null)
                 runInfo.Info.Add("App branch", env.Attribute("app-branch").Value);
 
+            if (env.Attribute("syncplicity-full-log") != null)
+            {
+                var htmlLink = string.Format("<a href='{0}'>Full log</a>", env.Attribute("syncplicity-full-log").Value);
+                runInfo.Info.Add("App full log", htmlLink);
+            }
+
             if (env.Attribute("tests-branch") != null)
                 runInfo.Info.Add("Tests branch", env.Attribute("tests-branch").Value);
 
