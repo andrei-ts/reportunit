@@ -302,7 +302,7 @@ namespace ReportUnit.Parser
 
             if (env.Attribute("syncplicity-full-log") != null)
             {
-                var htmlLink = string.Format("<a href='{0}'>Full log</a>", env.Attribute("syncplicity-full-log").Value);
+                var htmlLink = string.Format("<a href='{0}'>syncplicity.log</a>", env.Attribute("syncplicity-full-log").Value);
                 runInfo.Info.Add("App full log", htmlLink);
             }
 
