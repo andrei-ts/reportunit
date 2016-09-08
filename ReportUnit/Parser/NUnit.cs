@@ -306,6 +306,12 @@ namespace ReportUnit.Parser
                 runInfo.Info.Add("App full log", htmlLink);
             }
 
+            if (env.Attribute("syncplicity-logs-archive") != null)
+            {
+                var htmlLink = string.Format("<a href='{0}'>syncplicity_logs.zip</a>", env.Attribute("syncplicity-logs-archive").Value);
+                runInfo.Info.Add("App logs archive", htmlLink);
+            }
+
             if (env.Attribute("tests-branch") != null)
                 runInfo.Info.Add("Tests branch", env.Attribute("tests-branch").Value);
 
