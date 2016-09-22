@@ -283,10 +283,30 @@ namespace ReportUnit.Parser
 
         private RunInfo CreateRunInfo(XDocument doc, Report report)
         {
+            RunInfo runInfo = new RunInfo();
+            if (doc.Descendants("test-run").Any())
+            {
+                XElement testRun = doc.Descendants("test-run").First();
+                if (testRun.Attribute("start-time") != null)
+                    runInfo.Info.Add("Start time", testRun.Attribute("start-time").Value);
+
+                if (testRun.Attribute("end-time") != null)
+                    runInfo.Info.Add("End time", testRun.Attribute("end-time").Value);
+
+                if (testRun.Attribute("duration") != null)
+                {
+                    string durationAsString = testRun.Attribute("duration").Value;
+                    double seconds = Convert.ToDouble(durationAsString);
+                    TimeSpan timeSpan = TimeSpan.FromSeconds(seconds);
+                    string time = timeSpan.ToString(@"hh\h\:mm\m\:ss\s\:fff\m\s");
+
+                    runInfo.Info.Add("Duration", time);
+                }
+            }
+
             if (!doc.Descendants("environment").Any())
                 return null;
 
-            RunInfo runInfo = new RunInfo();
             runInfo.TestRunner = report.TestRunner;
 
             XElement env = doc.Descendants("environment").First();
