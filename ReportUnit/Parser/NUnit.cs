@@ -262,22 +262,35 @@ namespace ReportUnit.Parser
         /// <returns></returns>
         private HashSet<string> GetCategories(XElement elem)
         {
-            //Define which function to use
-
-
             //Grab unique categories
             HashSet<string> categories = new HashSet<string>();
 
-            List<XElement> cats = elem.Descendants("property")
-                .Where(c => c.Attribute("name").Value.Equals("Category", StringComparison.CurrentCultureIgnoreCase))
-                .ToList();
-
-            cats.ForEach(x =>
+            var propertiesElement = elem.Elements("properties").ToList();
+            if (!propertiesElement.Any())
             {
-                string cat = x.Attribute("value").Value;
-                categories.Add(cat);
+                return categories;
+            }
+            //get all <property name="Category"> elements
+            var categoryProperties = propertiesElement.Elements("property")
+                .Where(c =>
+                {
+                    var xAttribute = c.Attribute("name");
+                    return xAttribute != null && xAttribute.Value.Equals("Category", StringComparison.CurrentCultureIgnoreCase);
+                })
+                .ToList().ToList();
+            if (!categoryProperties.Any())
+            {
+                return categories;
+            }
+            categoryProperties.ForEach(x =>
+            {
+                var xAttribute = x.Attribute("value");
+                if (xAttribute != null)
+                {
+                    string cat = xAttribute.Value;
+                    categories.Add(cat);
+                }
             });
-
             return categories;
         }
 
