@@ -98,7 +98,7 @@ namespace ReportUnit.Parser
                 .Descendants("test-suite")
                 .Where(x => x.Attribute("type").Value.Equals("TestFixture", StringComparison.CurrentCultureIgnoreCase));
             
-            suites.AsParallel().ToList().ForEach(ts =>
+            suites.AsParallel().Where(suite=>suite.Descendants("test-case").Any()).ToList().ForEach(ts =>
             {
                 var testSuite = new TestSuite();
                 testSuite.Name = ts.Attribute("name").Value;
