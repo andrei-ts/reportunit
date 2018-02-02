@@ -98,7 +98,11 @@ namespace ReportUnit.Parser
                 .Descendants("test-suite")
                 .Where(x => x.Attribute("type").Value.Equals("TestFixture", StringComparison.CurrentCultureIgnoreCase));
             
-            suites.AsParallel().ToList().ForEach(ts =>
+            suites.AsParallel().Where(suite=>
+            {
+                var tests = suite.Descendants("test-case");
+                return tests.Any();
+            }).ToList().ForEach(ts =>
             {
                 var testSuite = new TestSuite();
                 testSuite.Name = ts.Attribute("name").Value;
@@ -118,6 +122,14 @@ namespace ReportUnit.Parser
                     ts.Attribute("end-time") != null 
                         ? ts.Attribute("end-time").Value 
                         : "";
+
+                testSuite.DurationAsDouble =
+                    ts.Attribute("duration") != null
+                        ? Convert.ToDouble(ts.Attribute("duration").Value)
+                        : 0;
+
+                testSuite.Duration = TimeSpan.FromSeconds(testSuite.DurationAsDouble).ToString(@"hh\:mm\:ss\:fff");
+
 
                 // any error messages and/or stack-trace
                 var failure = ts.Element("failure");
@@ -246,7 +258,7 @@ namespace ReportUnit.Parser
             });
 
             
-            report.TestSuiteList = report.TestSuiteList.OrderBy(ts => ts.Name).ToList();
+            report.TestSuiteList = report.TestSuiteList.OrderByDescending(ts => ts.DurationAsDouble).ToList();
 
             //Sort category list so it's in alphabetical order
             report.CategoryList.Sort();

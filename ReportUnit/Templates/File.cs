@@ -186,6 +186,7 @@ namespace ReportUnit.Templates
                                                     <li class='suite @Model.TestSuiteList[ix].Status.ToString().ToLower()'>
                                                         <div class='suite-head'>
                                                             <div class='suite-name'>@Model.TestSuiteList[ix].Name</div>
+                                                            <div class='suite-name'>@Model.TestSuiteList[ix].Duration</div>
                                                             @if(@Model.TestSuiteList[ix].Status.ToString().ToLower() == ""failed"" && @Model.TestSuiteList[ix].TestList.Count(x=> x.Status.ToString().ToLower()== ""failed"") != @Model.TestSuiteList[ix].TestList.Count)
                                                             {
                                                                  <div class='suite-result @Model.TestSuiteList[ix].Status.ToString().ToLower() right label'>@Model.TestSuiteList[ix].TestList.Count(x=> x.Status.ToString().ToLower()== ""failed"") of @Model.TestSuiteList[ix].TestList.Count @Model.TestSuiteList[ix].Status.ToString()</div>

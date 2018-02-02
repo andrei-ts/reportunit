@@ -32,8 +32,9 @@ namespace ReportUnit.Model
         /// <summary>
         /// How long the test fixture took to run (in milliseconds)
         /// </summary>
-        public double Duration { get; set; }
+        public double DurationAsDouble { get; set; }
 
         public List<Test> TestList { get; private set; }
+        public string Duration { get; set; }
     }
 }
