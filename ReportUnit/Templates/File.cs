@@ -365,9 +365,9 @@ namespace ReportUnit.Templates
                     </div>
                     
                 </body>
-                <script src='http://10.129.106.10/userContent/style/jquery.min.js'></script> 
-                <script src='http://10.129.106.10/userContent/style/materialize.min.js'></script> 
-                <script src='http://10.129.106.10/userContent/style/Chart.min.js'></script>
+                <script src='http://10.129.106.10/userContent/style/jquery.min.js' type='text/javascript'></script> 
+                <script src='http://10.129.106.10/userContent/style/materialize.min.js' type='text/javascript'></script> 
+                <script src='http://10.129.106.10/userContent/style/Chart.min.js' type='text/javascript'></script>
                 <script src='http://10.129.106.10/userContent/style/reportunit.js' type='text/javascript'></script>
 
             </html>
