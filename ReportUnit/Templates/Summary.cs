@@ -31,7 +31,7 @@ namespace ReportUnit.Templates
 	                <meta name='author' content=''>
 	                <title>ReportUnit TestRunner Report</title>
 	                <link href='http://10.129.106.10/userContent/style/materialize.min.css' rel='stylesheet' type='text/css'>
-	                <link href='http://10.129.106.10//userContent/style/opensansfont.css' rel='stylesheet' type='text/css'>
+	                <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 	                <link href='http://10.129.106.10/userContent/style/reportunit.css' type='text/css' rel='stylesheet' />
                     
                 </head>
