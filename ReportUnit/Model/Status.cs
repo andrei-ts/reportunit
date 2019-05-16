@@ -30,6 +30,7 @@
             {
                 case "skipped":
                 case "ignored":
+                case "skip":
                 case "not-run":
                 case "notrun":
                 case "notexecuted":
