@@ -81,6 +81,10 @@ namespace ReportUnit.Parser
                         }
                     }
 
+                    //testng
+                    XmlNode testNgNode = doc.SelectSingleNode("//testng-results");
+                    if (testNgNode != null) return TestRunner.TestNg;
+
                     // NUnit
                     // NOTE: not all nunit test files (ie when have nunit output format from other test runners) will contain the environment node
                     //            but if it does exist - then it should have the nunit-version attribute

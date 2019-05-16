@@ -7,6 +7,8 @@
         NUnit,
 		XUnitV1,
 		XUnitV2,
+		TestNg,
         Unknown
+        
     }
 }

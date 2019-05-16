@@ -115,9 +115,6 @@ namespace ReportUnit
         private static void CopyrightMessage()
         {
             Console.WriteLine("\n--\nReportUnit v1.5. Report generator for the test-runner family.");
-            Console.WriteLine("http://reportunit.relevantcodes.com/");
-            Console.WriteLine("Copyright (c) 2015 Anshoo Arora (Relevant Codes)");
-            Console.WriteLine("Developers:  Anshoo Arora, Sandra Greenhalgh\n--\n");
         }
 
     }

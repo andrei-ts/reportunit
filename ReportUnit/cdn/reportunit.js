@@ -17,7 +17,7 @@ $('.details-container').click(function(evt) {
         /* Converting brackets*/
         var escaped = t.next().html().replace(/(&lt;)/g, "<");
         escaped = escaped.replace(/(&gt;)/g, ">");
-        showDynamicModal(t.closest('tr').find('.name').text() + ' Logs', escaped);
+        showDynamicModal(t.closest('tr').find('.method-name').text() + ' Logs', escaped);
     }
     
     if (t.is('.showDescription')) {

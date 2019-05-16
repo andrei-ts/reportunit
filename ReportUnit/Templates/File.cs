@@ -215,7 +215,7 @@ namespace ReportUnit.Templates
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Duration</th>
-                                                                        <th>MethodName</th>
+                                                                        <th>Method Information</th>
                                                                         <th>TestName</th>
                                                                         <th>Status</th>
                                                                         @if (Model.TestSuiteList.Count > 0 && Model.TestSuiteList[ix].TestList.Any(x => x.CategoryList.Count > 0))
@@ -272,8 +272,7 @@ namespace ReportUnit.Templates
                                                                             {
                                                                                 if (!String.IsNullOrEmpty(@test.StatusMessage)) 
                                                                                 {
-                                                                                    <td>
-                                                                                    
+                                                                                    <td>                        
                                                                                         <div class='badge showStatusMessage error'><i class='mdi-alert-warning'></i></div>
                                                                                         <pre class='hide'>@test.StatusMessage.Replace(""<"", ""&lt;"").Replace("">"", ""&gt;"")</pre>
                                                                                     </td>
