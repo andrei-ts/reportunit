@@ -160,7 +160,7 @@ namespace ReportUnit.Parser
                         var messageElement = exceptionElement.Element("message");
                         if (messageElement != null)
                         {
-                            test.StatusMessage = delimeter + "EXCEPTION MESSAGE: " + Environment.NewLine +
+                            test.StatusMessage += delimeter + "EXCEPTION MESSAGE: " + Environment.NewLine +
                                                  messageElement.Value.Trim();
                         }
 

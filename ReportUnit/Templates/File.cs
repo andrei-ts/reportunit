@@ -215,8 +215,8 @@ namespace ReportUnit.Templates
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Duration</th>
-                                                                        <th>Method Information</th>
-                                                                        <th>TestName</th>
+                                                                        <th>Test Name</th>
+                                                                        <th>Test Method</th>
                                                                         <th>Status</th>
                                                                         @if (Model.TestSuiteList.Count > 0 && Model.TestSuiteList[ix].TestList.Any(x => x.CategoryList.Count > 0))
                                                                         {
@@ -224,7 +224,7 @@ namespace ReportUnit.Templates
                                                                         }
                                                                         @if (Model.TestSuiteList.Count > 0 && Model.TestSuiteList[ix].TestList.Where(x => !String.IsNullOrEmpty(x.Description) || !String.IsNullOrEmpty(x.StatusMessage)).Count() > 0) 
                                                                         {
-                                                                            <th>StatusMessage</th>
+                                                                            <th>Logs</th>
                                                                         }
                                                                         <th>Screenshots</th>
                                                                     </tr>
@@ -235,10 +235,7 @@ namespace ReportUnit.Templates
                                                                         <tr class='@test.Status.ToString().ToLower() test-status'>
                                                                             <td class='test-duration'>
                                                                                 <span class='test-duration'>@test.Duration</span>
-                                                                            </td>
-                                                                            <td class='method-name'>
-                                                                                <span class='name'>@test.MethodName</span>
-                                                                            </td>
+                                                                            </td>                        
                                                                             <td class='test-name'>
                                                                                 @{var testName = test.Name.Replace(""<"", ""&lt;"").Replace("">"", ""&gt;"");}
                                                                                 @if (!String.IsNullOrEmpty(@test.Description))
@@ -250,6 +247,9 @@ namespace ReportUnit.Templates
                                                                                 {
                                                                                     <span class='name'>@testName</span>
                                                                                 }
+                                                                            </td>
+                                                                            <td class='method-name'>
+                                                                                <span class='name'>@test.MethodName</span>
                                                                             </td>
                                                                             <td class='test-status @test.Status.ToString().ToLower()'>
                                                                                 <span class='label @test.Status.ToString().ToLower()'>@test.Status.ToString()</span>
