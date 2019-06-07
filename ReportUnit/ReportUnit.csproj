@@ -39,6 +39,7 @@
       <HintPath>..\packages\RazorEngine.3.7.3\lib\net40\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Razor">
       <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
@@ -50,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
     <Compile Include="Logging\Level.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\Logger.cs" />
@@ -64,6 +66,8 @@
     <Compile Include="Model\Status.cs" />
     <Compile Include="Model\Test.cs" />
     <Compile Include="Model\TestSuite.cs" />
+    <Compile Include="Parser\Screenshot\IScreenshotParser.cs" />
+    <Compile Include="Parser\Screenshot\ScreenshotRegexParser.cs" />
     <Compile Include="Parser\TestNg.cs" />
     <Compile Include="Parser\TestRunner.cs" />
     <Compile Include="Parser\XUnitV1.cs" />

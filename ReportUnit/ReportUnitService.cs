@@ -28,17 +28,28 @@ namespace ReportUnit
     		var attributes = File.GetAttributes(input);
 		IEnumerable<FileInfo> filePathList;
 
-        	 if ((FileAttributes.Directory & attributes) == FileAttributes.Directory)
-        	{
-				filePathList = new DirectoryInfo(input).GetFiles("*.xml", SearchOption.AllDirectories)
-					.OrderByDescending(f => f.CreationTime);
-	        }
-	        else
-	        {
-				filePathList = new DirectoryInfo(Directory.GetCurrentDirectory()).GetFiles(input);
-	        }
+            if ((FileAttributes.Directory & attributes) == FileAttributes.Directory)
+            {
+                filePathList =
+                    "*.trx|*.xml".Split('|')
+                        .SelectMany(
+                            filter =>
+                                new DirectoryInfo(input).GetFiles(filter, searchOption: SearchOption.AllDirectories))
+                        .ToList();
+            }
+            else
+            {
+                if (File.Exists(input))
+                {
+                    filePathList = new[] { new FileInfo(input) };
+                }
+                else
+                {
+                    filePathList = new DirectoryInfo(Directory.GetCurrentDirectory()).GetFiles(input);
+                }
+            }
 
-        	InitializeRazor();
+            InitializeRazor();
 
         	var compositeTemplate = new CompositeTemplate();
 	

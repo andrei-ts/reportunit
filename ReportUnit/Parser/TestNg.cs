@@ -7,13 +7,13 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using ReportUnit.Logging;
 using ReportUnit.Model;
+using ReportUnit.Parser.Screenshot;
 using ReportUnit.Utils;
 
 namespace ReportUnit.Parser
 {
     public class TestNg : IParser
     {
-
         public TestNg() { }
 
         private string resultsFile;
@@ -76,7 +76,7 @@ namespace ReportUnit.Parser
             IEnumerable<XElement> suites = doc
                 .Descendants("test");
 
-            suites.AsParallel().Where(suite => suite.Descendants("test-method").Any()).ToList().ForEach(ts =>
+            suites.AsParallel().AsOrdered().Where(suite => suite.Descendants("test-method").Any()).ToList().ForEach(ts =>
             {
                 var testSuite = new TestSuite();
                 testSuite.Name = ts.Attribute("name")?.Value;
@@ -98,7 +98,7 @@ namespace ReportUnit.Parser
                 testSuite.Duration = seconds;
 
                 // Test Cases
-                ts.Descendants("test-method").AsParallel().ToList().ForEach(tc =>
+                ts.Descendants("test-method").AsParallel().AsOrdered().ToList().ForEach(tc =>
                 {
                     var test = new Model.Test {MethodName = tc.Attribute("name")?.Value};
                     var parameterElements = tc.Descendants("param").ToList();
@@ -137,7 +137,7 @@ namespace ReportUnit.Parser
                                        Environment.NewLine;
                     
 
-                    // add NUnit console output to the status message
+                    // add TestNG console output to the status message
                     var reporterOutputElement = tc.Element("reporter-output");
 
                     if (reporterOutputElement != null)
@@ -145,11 +145,21 @@ namespace ReportUnit.Parser
                         var reporterLinesElements = reporterOutputElement.Descendants("line").ToList();
                         if (reporterLinesElements.Any())
                         {
-                            test.StatusMessage += delimeter + "EXECUTE STEPS:" + Environment.NewLine + delimeter;
+                            test.StatusMessage += delimeter + "EXECUTE STEPS:" + delimeter;
                             foreach (var reporterLineElement in reporterLinesElements)
                             {
-                                test.StatusMessage += reporterLineElement.Value.Trim() + delimeter;
+                                var logLine = reporterLineElement.Value.Trim();
+                                test.StatusMessage += logLine + delimeter;
+                                //screenshots
+                                if (Config.ParseScreenshots)
+                                {
+                                    var screenshotParser = new ScreenshotRegexParser(logLine);
+                                    screenshotParser.Parse();
+                                    test.ScreenshotLinks.AddRange(screenshotParser.ScreenshotLinks);
+                                }
                             }
+
+                            
                         }                       
                     }
 
@@ -172,29 +182,14 @@ namespace ReportUnit.Parser
                         }
                     }
 
-                    //add screenshot links
-                    if (reporterOutputElement != null)
-                    {
-                        MatchCollection matches = Regex.Matches(reporterOutputElement.Value.Trim(),
-                            @"Generated Screenshot:\s(<a.*a>)");
-                        foreach (Match match in matches)
-                        {
-                            if (match.Success)
-                            {
-                                test.ScreenshotLinks.Add(match.Groups[1].Value);
-                            }
-                        }
-                    }
                     testSuite.TestList.Add(test);
+
                 });
 
                 testSuite.Status = ReportUtil.GetFixtureStatus(testSuite.TestList);
 
                 report.TestSuiteList.Add(testSuite);
             });
-
-
-            report.TestSuiteList = report.TestSuiteList.OrderBy(ts => ts.Name).ToList();
 
             return report;
         }
