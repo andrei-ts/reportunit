@@ -136,7 +136,7 @@ function clickListItem(listClass, index) {
 
 $(document).ready(function() {
 	/* init */
-	$('select').material_select();
+	$('select').formSelect();
 	$('.modal-trigger').leanModal();
 	$('.tooltipped').tooltip({delay: 10});
 
@@ -159,7 +159,6 @@ $(document).ready(function() {
 	
 	resetFilters();
     $('.suite:first-child').click();
-
     $('.collapsible').collapsible({
         accordion: false
     });
