@@ -73,123 +73,150 @@ namespace ReportUnit.Parser
             // report status messages
             var testSuiteTypeAssembly = "testSuiteTypeAssembly";
 
-            IEnumerable<XElement> suites = doc
-                .Descendants("test");
 
-            suites.AsParallel().AsOrdered().Where(suite => suite.Descendants("test-method").Any()).ToList().ForEach(ts =>
+            var parentSuites = doc.Descendants("suite");
+
+            parentSuites.AsParallel().AsOrdered().Where(parentTs => parentTs.Descendants("test").Any()).ToList().ForEach(parentTs =>
             {
-                var testSuite = new TestSuite();
-                testSuite.Name = ts.Attribute("name")?.Value;
+                var parentTestSuite = new ParentTestSuite();
+                parentTestSuite.Name = parentTs.Attribute("name")?.Value;
 
-                // Suite Time Info
-                testSuite.StartTime =
-                    ts.Attribute("started-at") != null
-                        ? ts.Attribute("started-at")?.Value
+                // Parent Suite Time Info
+                parentTestSuite.StartTime =
+                    parentTs.Attribute("started-at") != null
+                        ? parentTs.Attribute("started-at")?.Value
                         : string.Empty;
 
-                // Suite Time Info
-                testSuite.EndTime =
-                    ts.Attribute("finished-at") != null
-                        ? ts.Attribute("finished-at")?.Value
+                parentTestSuite.EndTime =
+                    parentTs.Attribute("finished-at") != null
+                        ? parentTs.Attribute("finished-at")?.Value
                         : string.Empty;
 
-                string durationAsString = ts.Attribute("duration-ms")?.Value;
-                double seconds = Convert.ToDouble(durationAsString);
-                testSuite.Duration = seconds;
+                string parentSuiteDurationAsString = parentTs.Attribute("duration-ms")?.Value;
+                double parentSuiteSeconds = Convert.ToDouble(parentSuiteDurationAsString);
+                parentTestSuite.Duration = parentSuiteSeconds;
 
-                // Test Cases
-                ts.Descendants("test-method").AsParallel().AsOrdered().ToList().ForEach(tc =>
+                IEnumerable<XElement> suites = parentTs
+                .Descendants("test");
+                suites.AsParallel().AsOrdered().Where(suite => suite.Descendants("test-method").Any()).ToList().ForEach(ts =>
                 {
-                    var test = new Model.Test {MethodName = tc.Attribute("name")?.Value};
-                    var parameterElements = tc.Descendants("param").ToList();
+                    var testSuite = new TestSuite();
+                    testSuite.Name = ts.Attribute("name")?.Value;
 
-                    test.MethodName += parameterElements.Any()
-                        ? "(" + string.Join(",", parameterElements.Select(pEl => pEl.Element("value")?.Value)) + ")"
-                        : "()";
-                    test.Name = tc.Attribute("name")?.Value;
-                    test.Status = (tc.Attribute("status")?.Value).ToStatus();
+                    // Suite Time Info
+                    testSuite.StartTime =
+                        ts.Attribute("started-at") != null
+                            ? ts.Attribute("started-at")?.Value
+                            : string.Empty;
 
-                    // main a master list of all status
-                    // used to build the status filter in the view
-                    report.StatusList.Add(test.Status);
+                    // Suite Time Info
+                    testSuite.EndTime =
+                        ts.Attribute("finished-at") != null
+                            ? ts.Attribute("finished-at")?.Value
+                            : string.Empty;
 
-                    // TestCase Time Info
-                    test.StartTime =
-                        tc.Attribute("started-at") != null
-                            ? tc.Attribute("started-at")?.Value
-                            : "";
+                    string durationAsString = ts.Attribute("duration-ms")?.Value;
+                    double seconds = Convert.ToDouble(durationAsString);
+                    testSuite.Duration = seconds;
 
-                    test.EndTime =
-                        tc.Attribute("finished-at") != null
-                            ? tc.Attribute("finished-at")?.Value
-                            : "";
-                    //duration
-
-                    string duration = tc.Attribute("duration-ms") != null ? tc.Attribute("duration-ms")?.Value : "";
-                    if (!string.IsNullOrEmpty(duration))
+                    // Test Cases
+                    ts.Descendants("test-method").AsParallel().AsOrdered().ToList().ForEach(tc =>
                     {
-                        TimeSpan t = TimeSpan.FromMilliseconds(Convert.ToDouble(duration));
-                        test.Duration = t.ToString(@"hh\:mm\:ss\:fff");
-                    }
-                    
+                        var test = new Model.Test { MethodName = tc.Attribute("name")?.Value };
+                        var parameterElements = tc.Descendants("param").ToList();
 
-                    string delimeter = Environment.NewLine + "====================================================" +
-                                       Environment.NewLine;
-                    
+                        test.MethodName += parameterElements.Any()
+                            ? "(" + string.Join(",", parameterElements.Select(pEl => pEl.Element("value")?.Value)) + ")"
+                            : "()";
+                        test.Name = tc.Attribute("name")?.Value;
+                        test.Status = (tc.Attribute("status")?.Value).ToStatus();
 
-                    // add TestNG console output to the status message
-                    var reporterOutputElement = tc.Element("reporter-output");
+                        // main a master list of all status
+                        // used to build the status filter in the view
+                        report.StatusList.Add(test.Status);
 
-                    if (reporterOutputElement != null)
-                    {
-                        var reporterLinesElements = reporterOutputElement.Descendants("line").ToList();
-                        if (reporterLinesElements.Any())
+                        // TestCase Time Info
+                        test.StartTime =
+                            tc.Attribute("started-at") != null
+                                ? tc.Attribute("started-at")?.Value
+                                : "";
+
+                        test.EndTime =
+                            tc.Attribute("finished-at") != null
+                                ? tc.Attribute("finished-at")?.Value
+                                : "";
+                        //duration
+
+                        string duration = tc.Attribute("duration-ms") != null ? tc.Attribute("duration-ms")?.Value : "";
+                        if (!string.IsNullOrEmpty(duration))
                         {
-                            test.StatusMessage += delimeter + "EXECUTE STEPS:" + delimeter;
-                            foreach (var reporterLineElement in reporterLinesElements)
+                            TimeSpan t = TimeSpan.FromMilliseconds(Convert.ToDouble(duration));
+                            test.Duration = t.ToString(@"hh\:mm\:ss\:fff");
+                        }
+
+
+                        string delimeter = Environment.NewLine + "====================================================" +
+                                           Environment.NewLine;
+
+
+                        // add TestNG console output to the status message
+                        var reporterOutputElement = tc.Element("reporter-output");
+
+                        if (reporterOutputElement != null)
+                        {
+                            var reporterLinesElements = reporterOutputElement.Descendants("line").ToList();
+                            if (reporterLinesElements.Any())
                             {
-                                var logLine = reporterLineElement.Value.Trim();
-                                test.StatusMessage += logLine + delimeter;
-                                //screenshots
-                                if (Config.ParseScreenshots)
+                                test.StatusMessage += delimeter + "EXECUTE STEPS:" + delimeter;
+                                foreach (var reporterLineElement in reporterLinesElements)
                                 {
-                                    var screenshotParser = new ScreenshotRegexParser(logLine);
-                                    screenshotParser.Parse();
-                                    test.ScreenshotLinks.AddRange(screenshotParser.ScreenshotLinks);
+                                    var logLine = reporterLineElement.Value.Trim();
+                                    test.StatusMessage += logLine + delimeter;
+                                    //screenshots
+                                    if (Config.ParseScreenshots)
+                                    {
+                                        var screenshotParser = new ScreenshotRegexParser(logLine);
+                                        screenshotParser.Parse();
+                                        test.ScreenshotLinks.AddRange(screenshotParser.ScreenshotLinks);
+                                    }
                                 }
+
+
+                            }
+                        }
+
+                        // error and other status messages
+                        var exceptionElement = tc.Element("exception");
+                        if (exceptionElement != null)
+                        {
+                            var messageElement = exceptionElement.Element("message");
+                            if (messageElement != null)
+                            {
+                                test.StatusMessage += delimeter + "EXCEPTION MESSAGE: " + Environment.NewLine +
+                                                     messageElement.Value.Trim();
                             }
 
-                            
-                        }                       
-                    }
-
-                    // error and other status messages
-                    var exceptionElement = tc.Element("exception");
-                    if (exceptionElement != null)
-                    {
-                        var messageElement = exceptionElement.Element("message");
-                        if (messageElement != null)
-                        {
-                            test.StatusMessage += delimeter + "EXCEPTION MESSAGE: " + Environment.NewLine +
-                                                 messageElement.Value.Trim();
+                            var stackTraceElement = exceptionElement.Element("full-stacktrace");
+                            if (stackTraceElement != null)
+                            {
+                                test.StatusMessage += delimeter + "EXCEPTION STACKTRACE:" + Environment.NewLine +
+                                                      stackTraceElement.Value.Trim();
+                            }
                         }
 
-                        var stackTraceElement = exceptionElement.Element("full-stacktrace");
-                        if (stackTraceElement != null)
-                        {
-                            test.StatusMessage += delimeter + "EXCEPTION STACKTRACE:" + Environment.NewLine +
-                                                  stackTraceElement.Value.Trim();
-                        }
-                    }
+                        testSuite.TestList.Add(test);
 
-                    testSuite.TestList.Add(test);
+                    });
 
+                    testSuite.Status = ReportUtil.GetFixtureStatus(testSuite.TestList);
+                    parentTestSuite.TestSuiteList.Add(testSuite);
                 });
-
-                testSuite.Status = ReportUtil.GetFixtureStatus(testSuite.TestList);
-
-                report.TestSuiteList.Add(testSuite);
+                report.ParentTestSuiteList.Add(parentTestSuite);
             });
+        
+
+
+            
 
             return report;
         }

@@ -13,7 +13,7 @@ namespace ReportUnit.Model
 
         public List<string> CategoryList;
 
-        public List<TestSuite> TestSuiteList { get; set; }
+        public List<ParentTestSuite> ParentTestSuiteList { get; set; }
 
         public string StartTime { get; set; }
 
@@ -72,7 +72,7 @@ namespace ReportUnit.Model
 
         public Report()
         {
-            TestSuiteList = new List<TestSuite>();
+            ParentTestSuiteList = new List<ParentTestSuite>();
             CategoryList = new List<string>();
             StatusList = new List<Status>();
         }
