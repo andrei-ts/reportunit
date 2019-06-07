@@ -158,7 +158,12 @@ $(document).ready(function() {
 	$('ul.doughnut-legend').addClass('right');
 	
 	resetFilters();
-	$('.suite:first-child').click();
+    $('.suite:first-child').click();
+
+    $('.collapsible').collapsible({
+        accordion: false
+    });
+
 });
 
 var options = {
