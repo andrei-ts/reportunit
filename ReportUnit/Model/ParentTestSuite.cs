@@ -10,6 +10,7 @@ namespace ReportUnit.Model
         public ParentTestSuite()
         {
             TestSuiteList = new List<TestSuite>();
+            Status = Status.Unknown;
         }
 
         public List<TestSuite> TestSuiteList { get; set; }
@@ -24,5 +25,7 @@ namespace ReportUnit.Model
         /// How long the test fixture took to run (in milliseconds)
         /// </summary>
         public double Duration { get; set; }
+
+        public Status Status { get; set; }
     }
 }

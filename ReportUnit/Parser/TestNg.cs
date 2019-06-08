@@ -210,7 +210,11 @@ namespace ReportUnit.Parser
 
                     testSuite.Status = ReportUtil.GetFixtureStatus(testSuite.TestList);
                     parentTestSuite.TestSuiteList.Add(testSuite);
+                    
                 });
+                parentTestSuite.Status =
+                    ReportUtil.GetFixtureStatus(parentTestSuite.TestSuiteList.Select(ts => ts.Status).ToList());
+
                 report.ParentTestSuiteList.Add(parentTestSuite);
             });
         
