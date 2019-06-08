@@ -4,7 +4,7 @@ function showDynamicModal(heading, content) {
     var m = $('#dynamicModal');
     m.find('h4').text(heading);
     m.find('pre').html(content);
-    m.openModal({ in_duration: 200 });
+    m.modal('open');
 }
 
 $('.details-container').click(function(evt) {
