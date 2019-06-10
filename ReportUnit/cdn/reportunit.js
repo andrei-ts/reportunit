@@ -99,8 +99,7 @@ $('#category-toggle li').click(function () {
 });
 
 $('.clear').click(function () {
-    resetFilters();
-    selectVisSuite();
+    resetFilters(); selectVisSuite()
 });
 
 function filterByCategory(cat) {
