@@ -217,11 +217,8 @@ namespace ReportUnit.Parser
 
                 report.ParentTestSuiteList.Add(parentTestSuite);
             });
-        
 
-
-            
-
+            report.ParentTestSuiteList = report.ParentTestSuiteList.OrderByAlphaNumeric(pts => pts.TestSuiteList.First().Name).ToList();
             return report;
         }
 

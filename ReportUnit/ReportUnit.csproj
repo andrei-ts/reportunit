@@ -76,6 +76,7 @@
     <Compile Include="Templates\Summary.cs" />
     <Compile Include="Utils\DateTimeHelper.cs" />
     <Compile Include="Utils\ReportUtil.cs" />
+    <Compile Include="Utils\SortUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
