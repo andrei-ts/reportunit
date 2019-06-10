@@ -420,6 +420,30 @@ nav a.button-collapse {
     padding: 7px 20px;
 }
 
+/* ---- parent suites ----*/
+.parent-suite {
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    list-style: none;
+    padding: 0 5px;
+}
+
+.parent-suite.active {
+    background: #F0F8FF;
+    font-weight: 600;
+}
+
+.parent-suite-head {
+    display: block;
+    padding: 15px 0;
+}
+
+.parent-suite-name {
+    display: inline-block;
+    max-width: 75%;
+    word-break: break-all;
+}
+
 /* ---- [ fixture / suites ] ---- */
 .suite {
     border-bottom: 1px solid #eee;

@@ -187,7 +187,17 @@ namespace ReportUnit.Templates
 										{
 											var parentSuite = Model.ParentTestSuiteList[ip];
 											<li>
-												<div class='collapsible-header'>@parentSuite.Name</div>
+												<div class='parent-suite collapsible-header'>
+                                                    <div class='parent-suite-name'>@parentSuite.Name suite</div>
+                                                    @if(@parentSuite.Status.ToString().ToLower() == ""failed"" && @parentSuite.TestSuiteList.Count(x=> x.Status.ToString().ToLower()== ""failed"") != @parentSuite.TestSuiteList.Count)
+													{
+															<div class='suite-result @parentSuite.Status.ToString().ToLower() right label'>@parentSuite.TestSuiteList.Count(x=> x.Status.ToString().ToLower()== ""failed"") of @parentSuite.TestSuiteList.Count @parentSuite.Status.ToString()</div>
+													}
+													else
+													{
+														<div class='suite-result @parentSuite.Status.ToString().ToLower() right label'>@parentSuite.Status.ToString()</div>
+													}
+                                                </div>
 												<div class='collapsible-body'>
 											
 													@for (var ix = 0; ix < parentSuite.TestSuiteList.Count; ix++)
