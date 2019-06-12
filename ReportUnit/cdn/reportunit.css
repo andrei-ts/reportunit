@@ -480,6 +480,12 @@ nav a.button-collapse {
     word-break: break-all;
 }
 
+.suite-result {
+    display: inline-block;
+    max-width: 25%;
+    word-break: break-word;
+}
+
 .suite-footer {
     padding: 10px 0;
 }
