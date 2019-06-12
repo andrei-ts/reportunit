@@ -13,18 +13,6 @@ namespace ReportUnit.Templates
             return @"
 <!DOCTYPE html>
 <html lang='en'>
-<!--
-	ReportUnit 1.5 | http://reportunit.relevantcodes.com/
-	Created by Anshoo Arora (Relevant Codes) | Released under the MIT license
-
-	Template from:
-
-		ExtentReports Library | http://relevantcodes.com/extentreports-for-selenium/ | https://github.com/anshooarora/
-		Copyright (c) 2015, Anshoo Arora (Relevant Codes) | Copyrights licensed under the New BSD License | http://opensource.org/licenses/BSD-3-Clause
-		Documentation: http://extentreports.relevantcodes.com 
--->
-" +
-    @"
 	<head>
 		<meta charset='utf-8'>
 		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -33,7 +21,7 @@ namespace ReportUnit.Templates
 		<meta name='author' content=''>
 		<title>ReportUnit TestRunner Report</title>
 		<link href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css' rel='stylesheet' type='text/css'>
-		<link href='https://cdn.rawgit.com/andrei-turavets-epam/reportunit/35b79a52307882f3ea95fa74b93d1943bcd04fab/ReportUnit/cdn/reportunit.css' type='text/css' rel='stylesheet' />
+		<link href='https://cdn.rawgit.com/andrei-turavets-epam/reportunit/bf04eae7a4885ed98f8299d9f2b60bed27dfa3db/ReportUnit/cdn/reportunit.css' type='text/css' rel='stylesheet' />
       
 
           </head>
@@ -188,6 +176,7 @@ namespace ReportUnit.Templates
 											var parentSuite = Model.ParentTestSuiteList[ip];
 											<li>
 												<div class='parent-suite parent-suite-head collapsible-header'>
+                                                    <i class='mdi-navigation-expand-more'></i>
                                                     <div class='parent-suite-name'>@parentSuite.Name suite</div>
                                                     @if(@parentSuite.Status.ToString().ToLower() == ""failed"" && @parentSuite.TestSuiteList.Count(x=> x.Status.ToString().ToLower()== ""failed"") != @parentSuite.TestSuiteList.Count)
 													{
@@ -390,7 +379,7 @@ namespace ReportUnit.Templates
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js'></script> 
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
-	<script src='https://cdn.rawgit.com/andrei-turavets-epam/reportunit/35b79a52307882f3ea95fa74b93d1943bcd04fab/ReportUnit/cdn/reportunit.js' type='text/javascript'></script>
+	<script src='https://cdn.rawgit.com/andrei-turavets-epam/reportunit/bf04eae7a4885ed98f8299d9f2b60bed27dfa3db/ReportUnit/cdn/reportunit.js' type='text/javascript'></script>
 
 </html>
             ".Replace("\r\n", "").Replace("\t", "").Replace("    ", ""); 

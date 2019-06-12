@@ -421,8 +421,15 @@ nav a.button-collapse {
 }
 
 /* ---- parent suites ----*/
+.collapsible li.active i {
+    -ms-transform: rotate(180deg); /* IE 9 */
+    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+    transform: rotate(180deg);
+}
+
+
 .parent-suite {
-    border-bottom: 1px solid #eee;
+    border-bottom: 2px solid #eee;
     font-size: 14px;
     list-style: none;
     padding: 0 5px;
@@ -446,6 +453,7 @@ nav a.button-collapse {
 
 /* ---- [ fixture / suites ] ---- */
 .suite {
+    background: #FFFAFA;
     border-bottom: 1px solid #eee;
     font-size: 12px;
     list-style: none;
