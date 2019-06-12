@@ -491,7 +491,7 @@ nav a.button-collapse {
 .suite-result {
     display: inline-block;
     max-width: 25%;
-    word-break: break-word;
+    word-break: break-all;
 }
 
 .suite-footer {
