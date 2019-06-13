@@ -21,7 +21,7 @@ namespace ReportUnit.Templates
 		<meta name='author' content=''>
 		<title>ReportUnit TestRunner Report</title>
 		<link href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css' rel='stylesheet' type='text/css'>
-		<link href='https://cdn.rawgit.com/andrei-turavets-epam/reportunit/21f48e8ac785f1178fb2324d32eae97a77e2abe5/ReportUnit/cdn/reportunit.css' type='text/css' rel='stylesheet' />
+		<link href='https://cdn.rawgit.com/andrei-turavets-epam/reportunit/3b5404cecc7c4fbc28a8da3b3b8b5a8535071d84/ReportUnit/cdn/reportunit.css' type='text/css' rel='stylesheet' />
       
 
           </head>
@@ -379,7 +379,7 @@ namespace ReportUnit.Templates
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js'></script> 
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
-	<script src='https://cdn.rawgit.com/andrei-turavets-epam/reportunit/21f48e8ac785f1178fb2324d32eae97a77e2abe5/ReportUnit/cdn/reportunit.js' type='text/javascript'></script>
+	<script src='https://cdn.rawgit.com/andrei-turavets-epam/reportunit/3b5404cecc7c4fbc28a8da3b3b8b5a8535071d84/ReportUnit/cdn/reportunit.js' type='text/javascript'></script>
 
 </html>
             ".Replace("\r\n", "").Replace("\t", "").Replace("    ", ""); 
