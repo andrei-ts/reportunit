@@ -430,6 +430,7 @@ nav a.button-collapse {
 
 .parent-suite {
     border-bottom: 2px solid #eee;
+    border-right: 1px solid #eee;
     font-size: 14px;
     list-style: none;
     padding: 0 5px;
@@ -441,6 +442,7 @@ nav a.button-collapse {
 }
 
 .parent-suite-head {
+    overflow: auto;
     display: block;
     padding: 15px 0;
 }
@@ -455,6 +457,7 @@ nav a.button-collapse {
 .suite {
     background: #FFFAFA;
     border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
     font-size: 12px;
     list-style: none;
     padding: 0 5px;
@@ -466,6 +469,7 @@ nav a.button-collapse {
     }
 
 .suite-head {
+    overflow: auto;
     display: block;
     padding: 15px 0;
 }
@@ -491,7 +495,8 @@ nav a.button-collapse {
 .suite-result {
     display: inline-block;
     max-width: 25%;
-    word-break: break-all;
+    line-height: 120%;
+    word-break: break-word;
 }
 
 .suite-footer {

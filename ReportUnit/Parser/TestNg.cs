@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -122,7 +123,9 @@ namespace ReportUnit.Parser
                     // Test Cases
                     ts.Descendants("test-method").AsParallel().AsOrdered().ToList().ForEach(tc =>
                     {
-                        var test = new Model.Test { MethodName = tc.Attribute("name")?.Value };
+                        var methodName = tc.Attribute("name")?.Value;
+                        if (Config.TestMethodsNotToInclude.Contains(methodName)) return;                                                  
+                        var test = new Model.Test { MethodName = methodName };
                         var parameterElements = tc.Descendants("param").ToList();
 
                         test.MethodName += parameterElements.Any()
